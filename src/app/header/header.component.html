@@ -1,0 +1,146 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark px-2">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"
+      ><img
+        class="arg-programa"
+        src="../../assets/argentina programa.png"
+        alt="logo-arg-programa"
+        height="50px"
+    /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#experiencia"
+            >Experiencia</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#educacion"
+            >Estudios</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#Habilidades"
+            >Habilidades</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#proyectos"
+            >Proyectos</a
+          >
+        </li>
+      </ul>
+      <span class="navbar-text d-flex align-items-center">
+        <span id="email" class="d-flex" style="height: 30px"
+          ><a href="mailto:facundonicolasangel@gmail.com"
+            ><img
+              class="mx-1"
+              src="../../assets/logos/12.png"
+              width="30px"
+              height="30px"
+              alt="email"
+          /></a>
+          <p id="email-direction">facundonicolasangel@gmail.com</p></span
+        >
+        <a href="https://github.com/facundoangel" target="_blank"
+          ><img
+            class="mx-1"
+            src="../../assets/logos/9.png"
+            width="30px"
+            alt="github"
+        /></a>
+        <a href="https://www.linkedin.com/in/facundo-angel/" target="_blank"
+          ><img
+            class="mx-1"
+            src="../../assets/logos/13.png"
+            width="30px"
+            alt="linkedin"
+        /></a>
+        <div
+          (click)="showModal()"
+          *ngIf="!isOnLine"
+          class="login btn border text-white ms-3"
+        >
+          Iniciar Sesión
+        </div>
+        <div
+          (click)="this.closeSession()"
+          *ngIf="isOnLine"
+          class="login btn border text-white ms-3"
+        >
+          Cerrar Sesión
+        </div>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<!-- COMIENZO DEL HEADER-->
+
+<div
+  class="container-fluid header-portfolio position-relative overflow-hidden d-flex flex-column justify-content-center align-items-center"
+>
+  <div class="container-fluid">
+    <div class="bienvenida row h-100 text-white text-center">
+      <h1>Hola!👋 Soy Facundo Angel</h1>
+      <h2 class="h4">
+        Y soy un desarrollador<br />
+        fullstack junior ​💻​
+      </h2>
+    </div>
+  </div>
+  <video autoplay="autoplay" loop src="../../assets/bg-header.mp4"></video>
+</div>
+
+<!--DECLARACIONES DE LAS VENTANAS MODAL-->
+
+<div
+  *ngIf="switchForm"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light position-relative w-50">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form [formGroup]="form">
+      <div class="position-relative msg-validation">
+        <label class="form-label fw-bold" for="email">Usuario:</label>
+        <input
+          placeholder="Ingrese usuario"
+          (blur)="handleValidation($event)"
+          class="form-control"
+          name="usuario"
+          type="text"
+          formControlName="user"
+        />
+      </div>
+      <br />
+      <div class="position-relative msg-validation">
+        <label class="form-label fw-bold">Password:</label>
+        <input
+          placeholder="Ingrese contraseña"
+          (blur)="handleValidation($event)"
+          name="contrasenia"
+          class="form-control"
+          type="password"
+          formControlName="password"
+        />
+      </div>
+      <br />
+      <div>
+        <button (click)="createSession($event)" class="btn btn-primary">
+          Iniciar Sesión
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

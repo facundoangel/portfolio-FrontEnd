@@ -1,0 +1,235 @@
+<div
+  id="Habilidades"
+  class="container-fluid bg-light position-relative bg-skills p-5"
+>
+  <div class="container position-relative">
+    <div class="header-skill mb-5">
+      <div class="row">
+        <div class="col-12 col-md-5">
+          <h3 class="h1 title-skill position-relative my-5">Habilidades</h3>
+        </div>
+        <div class="col-12 col-md-7"></div>
+      </div>
+      <div class="grid-skills px-3 py-5 rounded">
+        <div class="row">
+          <div *ngFor="let sk of skills" class="col-6 col-lg-3">
+            <div class="p-4 mt-3">
+              <div
+                class="item-skill rounded-circle shadow bg-gradient d-flex flex-column justify-content-between align-items-center position-relative"
+                style="background-color: #19212e"
+              >
+                <h4 id="name-skill">{{ sk.name }}</h4>
+                <div *ngIf="isOnLine">
+                  <button
+                    (click)="showEditModal(sk)"
+                    class="edit hover-opacity"
+                  ></button>
+                  <button
+                    (click)="showDeleteModal('skills', sk.id)"
+                    class="del hover-opacity"
+                  ></button>
+                </div>
+                <img class="logo-skill" [src]="sk.photo" alt="logo skill" />
+                <div
+                  class="w-75 d-flex flex-column align-items-center justify-content-center flex-grow-1"
+                >
+                  <div
+                    class="progress bg-transparent d-flex w-75 justify-content-center align-items-end"
+                  >
+                    <div
+                      class="element-1 mx-1"
+                      style="height: 35%; background-color: #88ff63"
+                    ></div>
+                    <div
+                      class="element-2 mx-1"
+                      style="height: 70%"
+                      [ngStyle]="{
+                        'background-color':
+                          sk.level === 'Intermedio' || sk.level === 'Avanzado'
+                            ? '#88ff63'
+                            : '#6b8c61'
+                      }"
+                    ></div>
+                    <div
+                      class="element-3 mx-1"
+                      style="height: 100%"
+                      [ngStyle]="{
+                        'background-color':
+                          sk.level === 'Avanzado' ? '#88ff63' : '#6b8c61'
+                      }"
+                    ></div>
+                  </div>
+                  <p
+                    class="text-light"
+                    style="font-size: 0.8rem; font-weight: bold"
+                  >
+                    {{ sk.level }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3" *ngIf="isOnLine">
+            <button
+              (click)="showCreateModal()"
+              style="border: none; background: none; width: 100%"
+            >
+              <div class="p-4 mt-3">
+                <div
+                  class="item-add item-skill rounded-circle d-flex flex-column justify-content-center align-items-center"
+                >
+                  <img
+                    class="icon-plus"
+                    src="../../assets/logos/icon-plus.svg"
+                    alt="plus"
+                  />
+                  <p
+                    style="font-size: 0.8rem; font-weight: bold; color: #19212e"
+                  >
+                    Agregar <br />
+                    Habilidad
+                  </p>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--DECLARACIONES DE LAS VENTANAS MODAL-->
+
+<!--VENTANA MODAL DE EDICION-->
+<div
+  *ngIf="switchFormEdit"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form [formGroup]="formEdit" data-id="{{ resourceToEdit.id }}">
+      <div class="position-relative msg-validation">
+        <label class="form-label fw-bold">Nombre:</label>
+        <input
+          placeholder="Entre 1 y 40 caracteres"
+          (blur)="this.handleValidationEdit($event)"
+          class="form-control mb-3"
+          type="text"
+          formControlName="name"
+          name="name"
+          ngModel="{{ resourceToEdit.name }}"
+        />
+      </div>
+      <div class="position-relative msg-validation">
+        <label class="form-label fw-bold">Imagen (url):</label>
+        <input
+          placeholder="Ingrese la URL de la imagen"
+          (blur)="this.handleValidationEdit($event)"
+          class="form-control mb-3"
+          type="text"
+          formControlName="photo"
+          name="photo"
+          ngModel="{{ resourceToEdit.photo }}"
+        />
+      </div>
+      <div class="my-3">
+        <select
+          class="custom-select custom-select-sm w-100 text-dark fw-bold"
+          formControlName="level"
+          ngModel="{{ this.selectLevel(resourceToEdit.level) }}"
+          name="level"
+        >
+          <option value="" hidden selected>Nivel de conocimiento</option>
+          <option value="Inicial">Inicial</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+        </select>
+      </div>
+
+      <div class="text-center">
+        <button (click)="handleEdit($event)" class="btn btn-primary" autofocus>
+          Editar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--VENTANA MODAL DE CREACION-->
+<div
+  *ngIf="switchFormCreate"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form [formGroup]="formCreate">
+      <div class="position-relative msg-validation">
+        <label class="form-label fw-bold">Nombre:</label>
+        <input
+          placeholder="Entre 1 y 40 caracteres"
+          (blur)="this.handleValidationCreate($event)"
+          class="form-control mb-3"
+          type="text"
+          formControlName="name"
+          name="name"
+        />
+      </div>
+      <div class="position-relative msg-validation">
+        <label class="form-label fw-bold">Imagen (url):</label>
+        <input
+          placeholder="Ingrese la URL de la imagen"
+          (blur)="this.handleValidationCreate($event)"
+          class="form-control mb-3"
+          type="text"
+          formControlName="photo"
+          name="photo"
+        />
+      </div>
+      <div class="my-3">
+        <select
+          class="custom-select custom-select-sm w-100 text-dark fw-bold"
+          formControlName="level"
+          name="level"
+        >
+          <option value="" hidden selected>Nivel de conocimiento</option>
+          <option value="Inicial">Inicial</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+        </select>
+      </div>
+
+      <div class="text-center">
+        <button
+          (click)="handleCreate($event)"
+          class="btn btn-primary"
+          autofocus
+        >
+          Crear
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--VENTANA MODAL DE ELIMINACIÓN-->
+<div
+  *ngIf="switchFormDelete"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form class="position-relative text-center">
+      <img class="w-25" src="../../assets/trash-icon.png" alt="delete" />
+      <h3 class="my-5">¿Estas seguro que deseas eliminar?</h3>
+      <div class="text-center">
+        <button (click)="handleDelete()" class="btn btn-danger mx-2" autofocus>
+          Eliminar
+        </button>
+        <button (click)="closeModal()" class="btn btn-primary mx-2">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

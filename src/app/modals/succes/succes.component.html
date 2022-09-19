@@ -1,0 +1,14 @@
+<div class="bg-modal d-flex justify-content-center align-items-center">
+  <div class="p-5 bg-light text-dark position-relative w-50">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form class="position-relative text-center">
+      <img class="w-25" src="{{ this.icon }}" alt="success" />
+      <h3 class="my-5">{{ message.msg }}</h3>
+      <div class="text-center">
+        <button (click)="closeModal()" class="btn btn-warning mx-2">
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

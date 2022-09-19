@@ -1,0 +1,100 @@
+<div class="container-fluid py-6" style="background-color: #1a1d20">
+  <div class="row">
+    <div
+      class="about-me-img col-12 col-md-4 text-center pb-5 position-relative"
+    >
+      <button (click)="showModalPhoto()" *ngIf="isOnLine" class="edit"></button>
+      <img
+        style="margin-top: -50px"
+        class="rounded-circle border"
+        [src]="Photo.description"
+        alt="foto perfil"
+      />
+      <h3 class="text-white pt-4">Sobre Mi</h3>
+    </div>
+    <div
+      class="about-me text-center col-12 col-md-8 text-white d-flex justify-content-center align-items-center"
+    >
+      <p class="fs-6">
+        {{ this.Description.description }}
+        <button
+          (click)="showModalDescrip()"
+          *ngIf="isOnLine"
+          class="edit"
+          style="bottom: 10%"
+        ></button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!--DECLARACIONES DE LAS VENTANAS MODAL-->
+
+<!-- MODAL DE CAMBIO DE LA FOTO DE PERFIL-->
+
+<div
+  *ngIf="switchFormPhoto"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light position-relative w-50">
+    <button
+      (click)="closeModalPhoto()"
+      class="close position-absolute"
+    ></button>
+    <form [formGroup]="formPhoto" data-id="{{ this.Photo.id }}">
+      <div class="position-relative msg-validation" data-validation="">
+        <label class="form-label fw-bold" for="email">URL imagen:</label>
+        <input
+          placeholder="ingrese una url de una imagen"
+          (change)="this.handleValidationPhoto($event)"
+          class="form-control"
+          type="text"
+          formControlName="url"
+          ngModel="{{ Photo.description }}"
+        />
+      </div>
+      <br />
+      <div>
+        <button (click)="handleEdit($event)" class="btn btn-primary">
+          Cambiar Imagen
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL DE CAMBIO DE LA DESCRIPCIÓN-->
+
+<div
+  *ngIf="switchFormDescrip"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light position-relative w-50">
+    <button
+      (click)="closeModalDescrip()"
+      class="close position-absolute"
+    ></button>
+    <form [formGroup]="formDescrip" data-id="{{ this.Description.id }}">
+      <div class="position-relative msg-validation" data-validation="">
+        <label class="form-label fw-bold" for="email">Descripción:</label>
+
+        <textarea
+          placeholder="ingrese una descripción"
+          (blur)="this.handleValidationDes($event)"
+          ngModel="{{ this.Description.description }}"
+          class="form-control"
+          rows="6"
+          style="resize: none"
+          formControlName="descrip"
+          name="description"
+        ></textarea>
+      </div>
+      <br />
+      <div>
+        <button (click)="handleEdit($event)" class="btn btn-primary">
+          Cambiar descripción
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

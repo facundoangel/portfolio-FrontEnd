@@ -1,0 +1,339 @@
+<div id="proyectos" class="container experience p-5 text-white">
+  <div class="header-experience mb-5">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <h3 class="h1 title-experience position-relative mt-4">Proyectos</h3>
+      </div>
+      <div class="col-12 col-md-7"></div>
+    </div>
+  </div>
+  <div class="list-experience p-4 rounded mt-4 mb-5">
+    <!--ITEM OF PROJECT-->
+    <div *ngFor="let pr of projects" class="card item-experience my-3 bg-dark">
+      <div *ngIf="isOnLine">
+        <button class="edit hover-opacity" (click)="showEditModal(pr)"></button>
+        <button
+          class="del hover-opacity"
+          (click)="showDeleteModal('projects', pr.id)"
+        ></button>
+      </div>
+      <div class="card-header h2">{{ pr.name }}</div>
+      <div class="card-body">
+        <div class="row">
+          <div
+            class="presentacion-trabajo col-12 col-md-6 px-4 d-flex justify-content-center flex-column align-items-start"
+          >
+            <a [href]="pr.url" target="_blank">
+              <img [src]="pr.photo" alt="proyecto-1" class="img-fluid" />
+            </a>
+          </div>
+          <div
+            class="col-12 col-md-6 d-flex flex-column justify-content-start lign-items-center position-relative descripcion-trabajo"
+          >
+            <p class="descripcion">{{ pr.description }}</p>
+            <div class="divisor"></div>
+            <div class="tecnologias">
+              <img
+                *ngFor="let tech of pr.tecnologies"
+                class="my-2 mx-1"
+                src="{{ transformString(tech) }}"
+                alt="html"
+                height="30px"
+              />
+              <br />
+              <div class="text-center">
+                <a
+                  [href]="pr.url"
+                  target="_blank"
+                  class="btn btn-primary btn-sites px-3"
+                  >Ver sitio</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--ITEM OF ADD ITEM-->
+    <button class="add-button" (click)="showCreateModal()">
+      <div *ngIf="isOnLine" class="item-add">
+        <div
+          class="logo-add d-flex flex-column align-items-center justify-content-center"
+        >
+          <img
+            class="icon-plus"
+            src="../../assets/logos/icon-plus.svg"
+            alt="plus"
+          />
+          <p style="font-size: 0.8rem; font-weight: bold; color: #19212e">
+            Agregar Experiencia
+          </p>
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!--DECLARACIONES DE LAS VENTANAS MODAL-->
+
+<!--VENTANA MODAL DE EDICION-->
+<div
+  *ngIf="switchFormEdit"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form
+      [formGroup]="formEdit"
+      class="position-relative"
+      id="{{ this.resourceToEdit.id }}"
+    >
+      <div class="row">
+        <div class="col">
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Nombre Proyecto:</label>
+            <input
+              placeholder="Entre 1 y 40 caracteres"
+              (blur)="this.handleValidationEdit($event)"
+              class="form-control"
+              type="text"
+              formControlName="name"
+              name="name"
+              [ngModel]="this.resourceToEdit.name"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Imagen (Url):</label>
+            <input
+              placeholder="Ingrese URL de imagen"
+              (blur)="this.handleValidationEdit($event)"
+              class="form-control"
+              type="text"
+              formControlName="photo"
+              name="photo"
+              [ngModel]="this.resourceToEdit.photo"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Dirección web:</label>
+            <input
+              placeholder="Ingrese la dirección web del proyecto"
+              (blur)="this.handleValidationEdit($event)"
+              class="form-control"
+              type="text"
+              formControlName="url"
+              name="url"
+              [ngModel]="this.resourceToEdit.url"
+            />
+          </div>
+          <br />
+        </div>
+        <div class="col">
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Tecnologías Usadas:</label>
+            <button class="btn btn-warning" (click)="showInputTech()">
+              Seleccionar tecnologías
+            </button>
+            <div
+              class="input-floating"
+              [ngStyle]="{
+                visibility: switchInputTech ? 'visible' : 'hidden'
+              }"
+            >
+              <button
+                (click)="resetInputTech($event)"
+                class="close position-absolute"
+              ></button>
+              <button
+                class="save btn btn-warning position-absolute"
+                (click)="showInputTech()"
+              >
+                Guardar
+              </button>
+
+              <div
+                class="input-check"
+                *ngFor="let tech of this.skillToReceived"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="tech.id"
+                />
+                <img
+                  class="me-3 ms-1"
+                  src="{{ tech.photo }}"
+                  alt="{{ tech.name }}"
+                  height="20px"
+                />
+                <p class="d-inline">{{ tech.name }}</p>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Descripción Proyecto:</label>
+            <textarea
+              placeholder="Entre 1 y 300 caracteres"
+              (blur)="this.handleValidationEdit($event)"
+              class="form-control"
+              rows="6"
+              style="resize: none"
+              formControlName="description"
+              name="description"
+              [ngModel]="this.resourceToEdit.description"
+            ></textarea>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button (click)="handleEdit($event)" class="btn btn-primary">
+          Editar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--VENTANA MODAL DE CREACION-->
+<div
+  *ngIf="switchFormCreate"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form [formGroup]="formCreate" class="position-relative">
+      <div class="row">
+        <div class="col">
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Nombre Proyecto:</label>
+            <input
+              placeholder="Entre 1 y 40 caracteres"
+              (blur)="this.handleValidationCreate($event)"
+              ssssss
+              class="form-control"
+              type="text"
+              formControlName="name"
+              name="name"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Imagen (Url):</label>
+            <input
+              placeholder="Ingrese URL de imagen"
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              type="text"
+              formControlName="photo"
+              name="photo"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Dirección web:</label>
+            <input
+              placeholder="Ingrese la dirección web del proyecto"
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              type="text"
+              formControlName="url"
+              name="url"
+            />
+          </div>
+          <br />
+        </div>
+        <div class="col">
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Tecnologías Usadas:</label>
+            <button class="btn btn-warning" (click)="showInputTech()">
+              Seleccionar tecnologías
+            </button>
+            <div
+              class="input-floating"
+              [ngStyle]="{
+                visibility: switchInputTech ? 'visible' : 'hidden'
+              }"
+            >
+              <button
+                (click)="resetInputTech($event)"
+                class="close position-absolute"
+              ></button>
+              <button
+                class="save btn btn-warning position-absolute"
+                (click)="showInputTech()"
+              >
+                Guardar
+              </button>
+
+              <div
+                class="input-check"
+                *ngFor="let tech of this.skillToReceived"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [value]="tech.id"
+                />
+                <img
+                  class="me-3 ms-1"
+                  src="{{ tech.photo }}"
+                  alt="{{ tech.name }}"
+                  height="20px"
+                />
+                <p class="d-inline">{{ tech.name }}</p>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="position-relative msg-validation">
+            <label class="form-label fw-bold">Descripción Proyecto:</label>
+            <textarea
+              placeholder="Ingrese la descripción del proyecto"
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              rows="6"
+              style="resize: none"
+              formControlName="description"
+              name="description"
+            ></textarea>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button (click)="handleCreate($event)" class="btn btn-primary">
+          Crear
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--VENTANA MODAL DE ELIMINACIÓN-->
+<div
+  *ngIf="switchFormDelete"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form class="position-relative text-center">
+      <img class="w-25" src="../../assets/trash-icon.png" alt="delete" />
+      <h3 class="my-5">¿Estas seguro que deseas eliminar?</h3>
+      <div class="text-center">
+        <button (click)="handleDelete()" class="btn btn-danger mx-2">
+          Eliminar
+        </button>
+        <button (click)="closeModal()" class="btn btn-primary mx-2">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

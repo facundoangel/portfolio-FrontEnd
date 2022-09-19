@@ -1,0 +1,23 @@
+.bg-modal {
+  background-color: rgba(0, 0, 0, 0.514);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+}
+
+.close {
+  border: none;
+  border-radius: 50%;
+  transform: translate(50%, -50%);
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background: url("../../../assets/logos/close.svg"), rgb(29, 26, 26);
+  background-size: 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

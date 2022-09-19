@@ -1,0 +1,24 @@
+<div class="container-fluid p-0 bg-site">
+  <app-header (emitter)="notification($event)"></app-header>
+  <app-about-me (emitter)="notification($event)"></app-about-me>
+  <app-experience (emitter)="notification($event)"></app-experience>
+  <app-education (emitter)="notification($event)"></app-education>
+  <app-skill (emitter)="skillEmiter($event)"></app-skill>
+  <app-projects
+    (emitter)="notification($event)"
+    [skillToReceived]="skillToSend"
+  ></app-projects>
+  <app-footer></app-footer>
+  <app-succes
+    *ngIf="switchSucces"
+    (emitter)="closeModalSucces($event)"
+    [message]="this.message"
+    [icon]="this.icon"
+  ></app-succes>
+  <app-error
+    *ngIf="switchError"
+    (emitter)="closeModalError($event)"
+    [message]="this.message"
+  ></app-error>
+  <app-loader *ngIf="switchLoader"></app-loader>
+</div>

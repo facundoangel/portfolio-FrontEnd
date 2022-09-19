@@ -1,0 +1,304 @@
+<div id="experiencia" class="container experience p-5 mt-4 text-white">
+  <div class="header-experience mb-5">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <h3 class="h1 title-experience position-relative mt-4">
+          Experiencia Laboral
+        </h3>
+        <p>
+          Listado de los lugares donde trabaje, hasta ahora han sido puestos
+          laborales que no estan relacionados con el desarrollo de software
+        </p>
+      </div>
+      <div class="col-12 col-md-7"></div>
+    </div>
+  </div>
+  <div class="list-experience p-4 rounded mt-4 mb-5">
+    <!--ITEM OF EXPERIENCE-->
+    <div
+      *ngFor="let experience of experiences"
+      class="card item-experience my-3 bg-dark"
+    >
+      <div *ngIf="isOnLine">
+        <button
+          (click)="showEditModal(experience)"
+          class="edit hover-opacity"
+        ></button>
+        <button
+          (click)="showDeleteModal('experiences', experience.id)"
+          class="del hover-opacity"
+        ></button>
+      </div>
+      <div class="card-header h2">{{ experience.position }}</div>
+      <div class="card-body">
+        <div class="row">
+          <div
+            class="presentacion-trabajo col-12 col-md-3 px-4 d-flex justify-content-center flex-column align-items-start"
+          >
+            <h5 class="card-title">{{ experience.company }}</h5>
+            <h5 class="fecha fs-6 card-title pb-2 mb-3">
+              {{
+                convertDate(experience.dateStart) +
+                  " - " +
+                  convertDate(experience.dateEnd)
+              }}
+            </h5>
+          </div>
+          <div
+            class="col-12 col-md-9 d-flex align-items-center position-relative descripcion-trabajo"
+          >
+            <p class="px-4 card-text">
+              {{ experience.tasks }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--ITEM OF ADD ITEM-->
+    <button (click)="showCreateModal()" class="add-button">
+      <div *ngIf="isOnLine" class="item-add">
+        <div
+          class="logo-add d-flex flex-column align-items-center justify-content-center"
+        >
+          <img
+            class="icon-plus"
+            src="../../assets/logos/icon-plus.svg"
+            alt="plus"
+          />
+          <p style="font-size: 0.8rem; font-weight: bold; color: #19212e">
+            Agregar Experiencia
+          </p>
+        </div>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!--DECLARACIONES DE LAS VENTANAS MODAL-->
+
+<!--VENTANA MODAL DE EDICION-->
+<div
+  *ngIf="switchFormEdit"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form
+      [formGroup]="formEdit"
+      class="position-relative"
+      data-id="{{ resourceToEdit.id }}"
+    >
+      <div class="row">
+        <div class="col">
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Empresa:</label>
+            <input
+              placeholder="Entre 1 y 40 caracteres"
+              (blur)="this.handleValidationEdit($event)"
+              ngModel="{{ resourceToEdit.company }}"
+              class="form-control"
+              type="text"
+              formControlName="empresa"
+              name="company"
+            />
+          </div>
+          <br />
+
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Fecha de Inicio:</label>
+            <input
+              (blur)="this.handleValidationEdit($event)"
+              ngModel="{{ resourceToEdit.dateStart }}"
+              class="form-control"
+              type="date"
+              formControlName="fechaInicio"
+              name="dateStart"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Fecha de Fin:</label>
+            <input
+              (blur)="this.handleValidationEdit($event)"
+              ngModel="{{ resourceToEdit.dateEnd }}"
+              class="form-control"
+              type="date"
+              formControlName="fechaFin"
+              name="dateEnd"
+            />
+          </div>
+          <br />
+          <div class="form-check">
+            <label class="form-check-label">Presente</label>
+            <input
+              (change)="this.handleChangeCheckbox($event)"
+              class="form-check-input"
+              ngModel="{{ isPresent(resourceToEdit.dateEnd) }}"
+              type="checkbox"
+              formControlName="presente"
+              name="presente"
+            />
+          </div>
+          <br />
+        </div>
+        <div class="col">
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Puesto:</label>
+            <input
+              placeholder="Entre 1 y 40 caracteres"
+              (blur)="this.handleValidationEdit($event)"
+              ngModel="{{ resourceToEdit.position }}"
+              class="form-control"
+              type="text"
+              formControlName="puesto"
+              name="position"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">tareas:</label>
+            <textarea
+              placeholder="Entre 1 y 200 caracteres"
+              (blur)="this.handleValidationEdit($event)"
+              ngModel="{{ resourceToEdit.tasks }}"
+              class="form-control"
+              rows="6"
+              style="resize: none"
+              formControlName="tareas"
+              name="tasks"
+            ></textarea>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button (click)="handleEdit($event)" class="btn btn-primary" autofocus>
+          Editar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--VENTANA MODAL DE CREACION-->
+<div
+  *ngIf="switchFormCreate"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form [formGroup]="formCreate" class="position-relative">
+      <div class="row">
+        <div class="col">
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Empresa:</label>
+            <input
+              placeholder="Entre 1 y 40 caracteres"
+              (blur)="this.handleValidationCreate($event)"
+              name="company"
+              class="form-control"
+              type="text"
+              formControlName="empresa"
+            />
+          </div>
+          <br />
+
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Fecha de Inicio:</label>
+            <input
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              type="date"
+              name="dateStart"
+              formControlName="fechaInicio"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Fecha de Fin:</label>
+            <input
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              type="date"
+              name="dateEnd"
+              formControlName="fechaFin"
+            />
+          </div>
+          <br />
+          <div class="form-check">
+            <label class="form-check-label">Presente</label>
+            <input
+              (change)="this.handleChangeCheckbox($event)"
+              class="form-check-input"
+              name="now"
+              type="checkbox"
+              formControlName="presente"
+            />
+          </div>
+          <br />
+        </div>
+        <div class="col">
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">Puesto:</label>
+            <input
+              placeholder="Entre 1 y 40 caracteres"
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              type="text"
+              formControlName="puesto"
+              name="position"
+            />
+          </div>
+          <br />
+          <div class="position-relative msg-validation" data-validation="">
+            <label class="form-label fw-bold">tareas:</label>
+            <textarea
+              placeholder="Entre 1 y 200 caracteres"
+              (blur)="this.handleValidationCreate($event)"
+              class="form-control"
+              rows="6"
+              style="resize: none"
+              formControlName="tareas"
+              name="tasks"
+            ></textarea>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button
+          (click)="handleCreate($event)"
+          class="btn btn-primary"
+          autofocus
+        >
+          Crear
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!--VENTANA MODAL DE ELIMINACIÓN-->
+<div
+  *ngIf="switchFormDelete"
+  class="bg-modal d-flex justify-content-center align-items-center"
+>
+  <div class="p-5 bg-light text-dark position-relative">
+    <button (click)="closeModal()" class="close position-absolute"></button>
+    <form class="position-relative text-center">
+      <img class="w-25" src="../../assets/trash-icon.png" alt="delete" />
+      <h3 class="my-5">¿Estas seguro que deseas eliminar?</h3>
+      <div class="text-center">
+        <button (click)="handleDelete()" class="btn btn-danger mx-2" autofocus>
+          Eliminar
+        </button>
+        <button (click)="closeModal()" class="btn btn-primary mx-2">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

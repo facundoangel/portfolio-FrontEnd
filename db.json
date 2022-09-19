@@ -1,0 +1,89 @@
+{
+  "basicInfo": [
+    {
+      "photo": "../../assets/foto-perfil.jfif"
+    },
+    {
+      "presentation": "Me considero un entusiasta y autodidacta de la informatica. particularmente me aboco mas al desarrollo web pero me interesan todos los campos de la informatica. Considero que me desenvuelvo bien trabajando en equipo y priorizando tareas."
+    }
+  ],
+  "experiences": [
+    {
+      "id": 1,
+      "position": "Asistente Administrativo",
+      "company": "Municipio de Lanús - Capital Humano",
+      "dateStart": "2016-09-01",
+      "dateEnd": "2016-11-30",
+      "tasks": "Asistente de tareas administrativas varias, organización de archivo de Curriculum. y Confección de base de datos de postulantes en excel"
+    },
+    {
+      "id": 2,
+      "position": "Administrativo",
+      "company": "Municipio de Lanús",
+      "dateStart": "2017-04-01",
+      "dateEnd": "2013-05-31",
+      "tasks": "1Ea ea id adipisicing cupidatat cillum sunt cillum consequat cillum irure. Aute sunt eiusmod cupidatat ex ad. Et est velit aliquip exercitation officia labore est. Qui eiusmod esse aute aliquip cillum cupidatat minim anim."
+    },
+    {
+      "id": 3,
+      "position": "Administrativo - Atención al Público",
+      "company": "Universidad Nacional de La Matanza",
+      "dateStart": "2022-06-01",
+      "dateEnd": "",
+      "tasks": "bbbbbbbbbbbbbbb"
+    }
+  ],
+  "educations": [
+    {
+      "id": 1,
+      "name": "Capacitación Desarrollo full Stack",
+      "institution": "Programa Argentina Programa",
+      "title": "Desarrollador Web Full Stack Jr.",
+      "dateStart": "2021-10-01",
+      "dateEnd": "Presente"
+    }
+  ],
+  "skills": [
+    {
+      "id": 1,
+      "name": "javascript",
+      "photo": "https://i.imgur.com/h8oNzHS.png",
+      "level": "Intermedio"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Practica Bootstrap",
+      "photo": "../../assets/miniatura proyecto 2.JPG",
+      "description": "Este proyecto formo parte de mi formación dentro del curso de programación de \"Argentina Programa\" en donde practique una maquetación de una página web estática usando Bootstrap.",
+      "url": "https://facundoangel.github.io/practica-bootstrap/",
+      "tecnologies": []
+    },
+    {
+      "id": 2,
+      "name": "Challenge frontendmentor - blog landing",
+      "photo": "../../assets/miniatura proyecto 3.JPG",
+      "description": "Proyecto de práctica de una maquetación web, se usó jquery para algunas funcionalidades de la UI. Es un challenge de la página de práctica para programadores frontend (frontendmentor.io)",
+      "url": "https://facundoangel.github.io/FEM/landing-page-1/",
+      "tecnologies": [
+        "../../assets/logos/2.png",
+        "../../assets/logos/11.png",
+        "../../assets/logos/1.png",
+        "../../assets/logos/5.png"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Ajax Test",
+      "photo": "../../assets/miniatura proyecto 1.JPG",
+      "description": "Este proyecto fue mi primer pagina web, en donde practique mis primeros pasos en las peticiones ajax utilizando tres diferentes metodos, usa javascript nativo sin framework",
+      "url": "https://facundoangel.github.io/proyecto-ajax/",
+      "tecnologies": [
+        "../../assets/logos/2.png",
+        "../../assets/logos/3.png",
+        "../../assets/logos/1.png"
+      ]
+    }
+  ]
+}

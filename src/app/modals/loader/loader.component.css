@@ -1,0 +1,21 @@
+.bg-modal {
+  background-color: rgba(0, 0, 0, 0.514);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+}
+.spinner {
+  animation: toTurn 1.5s linear infinite;
+}
+
+@keyframes toTurn {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
