@@ -100,7 +100,18 @@
       </h2>
     </div>
   </div>
-  <video autoplay="autoplay" loop src="../../assets/bg-header.mp4"></video>
+  <video
+    #videoBanner
+    id="videoBanner"
+    [autoplay]="true"
+    [muted]="true"
+    [loop]="true"
+  >
+    <source
+      src="https://porftolio-angular.web.app/assets/bg-header.mp4"
+      type="video/mp4"
+    />
+  </video>
 </div>
 
 <!--DECLARACIONES DE LAS VENTANAS MODAL-->

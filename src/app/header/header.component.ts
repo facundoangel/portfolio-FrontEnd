@@ -1,4 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  Renderer2,
+} from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -11,8 +19,13 @@ export class HeaderComponent implements OnInit {
   switchForm: Boolean;
   form: FormGroup;
   @Output() emitter: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('videoBanner') video: ElementRef;
 
-  constructor(private auth: AuthService, private formBuilder: FormBuilder) {
+  constructor(
+    private auth: AuthService,
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2
+  ) {
     this.form = this.formBuilder.group({
       password: ['', [Validators.required, Validators.pattern(/^\w*$/)]],
       user: ['', [Validators.required, Validators.pattern(/^\w*$/)]],
