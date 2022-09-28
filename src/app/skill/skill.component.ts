@@ -15,12 +15,6 @@ export class SkillComponent implements OnInit {
   switchFormDelete: Boolean;
   resourceToDelete: [String, number | null];
   resourceToEdit: skill;
-  resourceToCreate: any = {
-    id: null,
-    name: '',
-    photo: '',
-    level: '',
-  };
   skills: skill[];
   formEdit: FormGroup;
   formCreate: FormGroup;
@@ -53,14 +47,15 @@ export class SkillComponent implements OnInit {
       photo: ['', [Validators.required]],
       level: ['', [Validators.required]],
     });
-    this.getSkill();
   }
 
   public get isOnLine(): boolean {
     return this.Auth.logIn;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSkill();
+  }
 
   emit(message: any) {
     this.emitter.emit(message);
@@ -133,6 +128,7 @@ export class SkillComponent implements OnInit {
   }
 
   public handleEdit($event: any) {
+    let resourceToEdit = {} as skill;
     this.emit({ msg: '', type: 'loader' });
 
     if (!this.formEdit.valid) {
@@ -141,21 +137,21 @@ export class SkillComponent implements OnInit {
     }
 
     let form = $event.target.parentElement.parentElement;
-    this.resourceToEdit.id = form.id;
-    this.resourceToEdit.name = form.name.value;
-    this.resourceToEdit.photo = form.photo.value;
-    this.resourceToEdit.level = form.level.value;
+    resourceToEdit.id = form.id;
+    resourceToEdit.name = form.name.value;
+    resourceToEdit.photo = form.photo.value;
+    resourceToEdit.level = form.level.value;
 
     this.ajax
-      .editResource('skills', this.resourceToEdit.id, this.resourceToEdit)
+      .editResource('skills', resourceToEdit.id, resourceToEdit)
       .subscribe({
         next: () => {
           this.emit({ msg: 'Recurso editado con exito', type: 'success-save' });
           this.skills.forEach((skill) => {
-            if (skill.id == this.resourceToEdit.id) {
-              skill.name = this.resourceToEdit.name;
-              skill.photo = this.resourceToEdit.photo;
-              skill.level = this.resourceToEdit.level;
+            if (skill.id == resourceToEdit.id) {
+              skill.name = resourceToEdit.name;
+              skill.photo = resourceToEdit.photo;
+              skill.level = resourceToEdit.level;
             }
           });
           this.emit(this.skills);
@@ -170,6 +166,12 @@ export class SkillComponent implements OnInit {
   }
 
   public handleCreate($event: any) {
+    let resourceToCreate = {
+      id: null,
+      name: '',
+      photo: '',
+      level: '',
+    };
     this.emit({ msg: '', type: 'loader' });
 
     if (!this.formCreate.valid) {
@@ -180,16 +182,16 @@ export class SkillComponent implements OnInit {
     $event.preventDefault();
     let form = $event.target.parentElement.parentElement;
 
-    this.resourceToCreate.name = form.name.value;
-    this.resourceToCreate.photo = form.photo.value;
-    this.resourceToCreate.level = form.level.value;
+    resourceToCreate.name = form.name.value;
+    resourceToCreate.photo = form.photo.value;
+    resourceToCreate.level = form.level.value;
 
     form.reset();
 
-    this.ajax.createResource('skills', this.resourceToCreate).subscribe({
+    this.ajax.createResource('skills', resourceToCreate).subscribe({
       next: (data) => {
-        this.resourceToCreate.id = data;
-        this.skills.push(this.resourceToCreate);
+        resourceToCreate.id = data;
+        this.skills.push(resourceToCreate);
         this.emit(this.skills);
         this.closeModal();
         this.emit({ msg: 'Recurso creado con exito', type: 'success-save' });

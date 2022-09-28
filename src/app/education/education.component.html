@@ -1,4 +1,4 @@
-<div id="educacion" class="container experience p-5 text-white">
+<div id="educacion" class="container-lg experience p-5 text-white">
   <div class="header-experience mb-5">
     <div class="row">
       <div class="col-12 col-md-5">
@@ -14,11 +14,7 @@
   </div>
   <div class="list-experience p-4 rounded mt-4 mb-5">
     <!--ITEM OF EDUCATION-->
-    <div
-      class="card item-experience my-3 bg-dark"
-      style="width: 60% !important"
-      *ngFor="let ed of educations"
-    >
+    <div class="card item-experience my-3" *ngFor="let ed of educations">
       <div *ngIf="isOnLine">
         <button (click)="showEditModal(ed)" class="edit hover-opacity"></button>
         <button
@@ -27,7 +23,7 @@
         ></button>
       </div>
       <div class="card-header h2">{{ ed.name }}</div>
-      <div class="card-body">
+      <div class="card-body bg-dark">
         <h5 class="card-title">{{ ed.institution }}</h5>
         <h5 class="fecha fs-6 card-title">Titulo a obtener: {{ ed.title }}</h5>
         <h5 class="fecha fs-6 card-title pb-2 mb-3">

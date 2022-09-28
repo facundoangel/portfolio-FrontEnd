@@ -1,4 +1,4 @@
-<div id="proyectos" class="container experience p-5 text-white">
+<div id="proyectos" class="container-lg experience p-5 text-white">
   <div class="header-experience mb-5">
     <div class="row">
       <div class="col-12 col-md-5">
@@ -9,7 +9,7 @@
   </div>
   <div class="list-experience p-4 rounded mt-4 mb-5">
     <!--ITEM OF PROJECT-->
-    <div *ngFor="let pr of projects" class="card item-experience my-3 bg-dark">
+    <div *ngFor="let pr of projects" class="card item-experience my-3">
       <div *ngIf="isOnLine">
         <button class="edit hover-opacity" (click)="showEditModal(pr)"></button>
         <button
@@ -18,20 +18,24 @@
         ></button>
       </div>
       <div class="card-header h2">{{ pr.name }}</div>
-      <div class="card-body">
+      <div class="card-body bg-dark px-4">
         <div class="row">
           <div
-            class="presentacion-trabajo col-12 col-md-6 px-4 d-flex justify-content-center flex-column align-items-start"
+            class="presentacion-trabajo col-12 col-lg-6 d-flex justify-content-center flex-column align-items-start"
           >
-            <a [href]="pr.url" target="_blank">
-              <img [src]="pr.photo" alt="proyecto-1" class="img-fluid" />
+            <a [href]="pr.url" target="_blank" class="w-100">
+              <img
+                [src]="pr.photo"
+                alt="proyecto-1"
+                class="img-project text-center my-3"
+              />
             </a>
           </div>
           <div
-            class="col-12 col-md-6 d-flex flex-column justify-content-start lign-items-center position-relative descripcion-trabajo"
+            class="col-12 col-lg-6 d-flex flex-column justify-content-start lign-items-center position-relative descripcion-trabajo"
           >
             <p class="descripcion">{{ pr.description }}</p>
-            <div class="divisor"></div>
+            <div class="divisor my-2"></div>
             <div class="tecnologias">
               <img
                 *ngFor="let tech of pr.tecnologies"

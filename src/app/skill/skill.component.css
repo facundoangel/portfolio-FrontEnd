@@ -142,3 +142,13 @@ input:not(input[class*="form-check"]) {
   color: #f00;
   font-size: 12px;
 }
+
+@media (max-width: 720px) {
+  .grid-skills {
+    padding: 10px 0;
+  }
+
+  .item-skill {
+    width: 100%;
+  }
+}

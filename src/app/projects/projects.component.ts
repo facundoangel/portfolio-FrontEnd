@@ -18,14 +18,6 @@ export class ProjectsComponent implements OnInit {
 
   resourceToDelete: [String, number | null];
   resourceToEdit: project;
-  resourceToCreate: any = {
-    id: null,
-    name: '',
-    photo: '',
-    description: '',
-    url: '',
-    tecnologies: [],
-  };
   projects: project[];
   technologies: skill[];
   formEdit: FormGroup;
@@ -43,7 +35,7 @@ export class ProjectsComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       photo: ['', [Validators.required]],
@@ -51,7 +43,7 @@ export class ProjectsComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,300}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,300}$/),
         ],
       ],
       url: ['', [Validators.required]],
@@ -62,7 +54,7 @@ export class ProjectsComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       photo: ['', [Validators.required]],
@@ -70,22 +62,22 @@ export class ProjectsComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,300}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,300}$/),
         ],
       ],
       url: ['', [Validators.required]],
       tecnologies: ['', []],
     });
-
-    this.getProjects();
-    this.getTecnologies();
   }
 
   public get isOnLine(): boolean {
     return this.Auth.logIn;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getProjects();
+    this.getTecnologies();
+  }
 
   emit(message: any) {
     this.emitter.emit(message);
@@ -170,6 +162,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   public handleEdit($event: any) {
+    let resourceToEdit = {} as project;
     this.emit({ msg: '', type: 'loader' });
 
     let imgTecnologies: any[] = [];
@@ -184,11 +177,11 @@ export class ProjectsComponent implements OnInit {
       form.children[0].children[1].children[0].children[2].children;
     let technologiesToSend: string[] = [];
 
-    this.resourceToEdit.id = form.id;
-    this.resourceToEdit.name = form.name.value;
-    this.resourceToEdit.photo = form.photo.value;
-    this.resourceToEdit.description = form.description.value;
-    this.resourceToEdit.url = form.url.value;
+    resourceToEdit.id = form.id;
+    resourceToEdit.name = form.name.value;
+    resourceToEdit.photo = form.photo.value;
+    resourceToEdit.description = form.description.value;
+    resourceToEdit.url = form.url.value;
 
     for (let i = 0; i < techForm.length; i++) {
       if (i > 1) {
@@ -199,21 +192,21 @@ export class ProjectsComponent implements OnInit {
       }
     }
 
-    this.resourceToEdit.tecnologies = technologiesToSend;
+    resourceToEdit.tecnologies = technologiesToSend;
 
-    console.log(this.resourceToEdit);
+    console.log(resourceToEdit);
 
     this.ajax
-      .editResource('projects', this.resourceToEdit.id, this.resourceToEdit)
+      .editResource('projects', resourceToEdit.id, resourceToEdit)
       .subscribe({
         next: () => {
           this.emit({ msg: 'Recurso editado con exito', type: 'success-save' });
           this.projects.forEach((project) => {
-            if (project.id == this.resourceToEdit.id) {
-              project.name = this.resourceToEdit.name;
-              project.photo = this.resourceToEdit.photo;
-              project.description = this.resourceToEdit.description;
-              project.url = this.resourceToEdit.url;
+            if (project.id == resourceToEdit.id) {
+              project.name = resourceToEdit.name;
+              project.photo = resourceToEdit.photo;
+              project.description = resourceToEdit.description;
+              project.url = resourceToEdit.url;
               project.tecnologies = imgTecnologies;
             }
           });
@@ -228,6 +221,14 @@ export class ProjectsComponent implements OnInit {
   }
 
   public handleCreate($event: any) {
+    let resourceToCreate = {
+      id: null,
+      name: '',
+      photo: '',
+      description: '',
+      url: '',
+      tecnologies: [''],
+    };
     this.emit({ msg: '', type: 'loader' });
 
     let imgTecnologies: any[] = [];
@@ -243,10 +244,10 @@ export class ProjectsComponent implements OnInit {
       form.children[0].children[1].children[0].children[2].children;
     let technologiesToSend: string[] = [];
 
-    this.resourceToCreate.name = form.name.value;
-    this.resourceToCreate.photo = form.photo.value;
-    this.resourceToCreate.description = form.description.value;
-    this.resourceToCreate.url = form.url.value;
+    resourceToCreate.name = form.name.value;
+    resourceToCreate.photo = form.photo.value;
+    resourceToCreate.description = form.description.value;
+    resourceToCreate.url = form.url.value;
 
     for (let i = 0; i < techForm.length; i++) {
       if (i > 1) {
@@ -257,15 +258,15 @@ export class ProjectsComponent implements OnInit {
       }
     }
 
-    this.resourceToCreate.tecnologies = technologiesToSend;
+    resourceToCreate.tecnologies = technologiesToSend;
 
     form.reset();
 
-    this.ajax.createResource('projects', this.resourceToCreate).subscribe({
+    this.ajax.createResource('projects', resourceToCreate).subscribe({
       next: (data) => {
-        this.resourceToCreate.id = data;
-        this.resourceToCreate.tecnologies = imgTecnologies;
-        this.projects.unshift(this.resourceToCreate);
+        resourceToCreate.id = data;
+        resourceToCreate.tecnologies = imgTecnologies;
+        this.projects.unshift(resourceToCreate);
         this.emit({ msg: 'Recurso creado con exito', type: 'success-save' });
       },
       error: (data) => {

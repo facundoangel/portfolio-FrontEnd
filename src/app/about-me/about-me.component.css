@@ -77,3 +77,10 @@
   color: #f00;
   font-size: 12px;
 }
+
+@media (max-width: 720px) {
+  .about-me {
+    position: relative;
+    min-height: auto;
+  }
+}

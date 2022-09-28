@@ -10,7 +10,7 @@ export class AuthService {
 
   public createSession(userName: String, pass: String): Observable<any> {
     return this.http.post(
-      'https://portfolio-backend-argentinapro.herokuapp.com/auth',
+      'http://localhost:8080/auth/',
       { pass, userName },
       {
         headers: new HttpHeaders({

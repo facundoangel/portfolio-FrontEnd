@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ResourceAjaxService {
   deleteStatus: String;
-  url: String = 'https://portfolio-backend-argentinapro.herokuapp.com/';
+  url: String = 'http://localhost:8080/';
   emitter: any;
 
   constructor(private http: HttpClient) {}

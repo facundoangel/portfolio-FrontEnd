@@ -1,4 +1,4 @@
-<div id="experiencia" class="container experience p-5 mt-4 text-white">
+<div id="experiencia" class="container-lg experience p-5 mt-4 text-white">
   <div class="header-experience mb-5">
     <div class="row">
       <div class="col-12 col-md-5">
@@ -13,11 +13,11 @@
       <div class="col-12 col-md-7"></div>
     </div>
   </div>
-  <div class="list-experience p-4 rounded mt-4 mb-5">
+  <div class="list-experience p-4 rounded mt-4 mb-5 bg-none">
     <!--ITEM OF EXPERIENCE-->
     <div
       *ngFor="let experience of experiences"
-      class="card item-experience my-3 bg-dark"
+      class="card item-experience my-3"
     >
       <div *ngIf="isOnLine">
         <button
@@ -29,11 +29,13 @@
           class="del hover-opacity"
         ></button>
       </div>
-      <div class="card-header h2">{{ experience.position }}</div>
-      <div class="card-body">
+      <div class="card-header h4 p-3">
+        {{ experience.position }}
+      </div>
+      <div class="card-body bg-dark">
         <div class="row">
           <div
-            class="presentacion-trabajo col-12 col-md-3 px-4 d-flex justify-content-center flex-column align-items-start"
+            class="presentacion-trabajo col-12 col-md-3 d-flex justify-content-center flex-column align-items-start"
           >
             <h5 class="card-title">{{ experience.company }}</h5>
             <h5 class="fecha fs-6 card-title pb-2 mb-3">
@@ -45,9 +47,9 @@
             </h5>
           </div>
           <div
-            class="col-12 col-md-9 d-flex align-items-center position-relative descripcion-trabajo"
+            class="col-12 p-3 col-md-9 d-flex align-items-center position-relative descripcion-trabajo"
           >
-            <p class="px-4 card-text">
+            <p class="card-text">
               {{ experience.tasks }}
             </p>
           </div>

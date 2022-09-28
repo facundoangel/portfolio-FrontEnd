@@ -28,7 +28,7 @@ export class AboutMeComponent implements OnInit {
     this.formDescrip = this.formBuilder.group({
       descrip: [
         '',
-        [Validators.required, Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]+$/)],
+        [Validators.required, Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]+$/)],
       ],
     });
 

@@ -71,7 +71,17 @@
 }
 
 .card {
+  background: none;
+  border: none;
   width: 60%;
+}
+
+.card-header {
+  border-radius: 20px 20px 0 0;
+  background-color: #85ffbd;
+  background-image: linear-gradient(45deg, #85ffbd 0%, #fffb7d 100%);
+  color: #ffffff;
+  text-shadow: 1px 1px 4px black;
 }
 
 .card-header {
@@ -182,4 +192,30 @@ input:not(input[class*="form-check"]) {
   transform: translateY(80%);
   color: #f00;
   font-size: 12px;
+}
+
+@media (max-width: 780px) {
+  .card {
+    width: 100% !important;
+  }
+
+  .item-experience {
+    margin-left: 0px;
+  }
+  .item-experience::before {
+    width: 0px;
+    height: 0px;
+  }
+  .item-experience:not(.item-experience:first-child)::after {
+    width: 0px;
+    height: 0px;
+  }
+  .descripcion-trabajo::before {
+    width: 0px;
+    height: 0px;
+  }
+
+  .card-header {
+    padding-right: 110px !important;
+  }
 }

@@ -15,14 +15,6 @@ export class EducationComponent implements OnInit {
   switchFormDelete: Boolean;
   resourceToDelete: [String, number | null];
   resourceToEdit: education;
-  resourceToCreate: any = {
-    id: null,
-    name: '',
-    institution: '',
-    title: '',
-    dateStart: '',
-    dateEnd: '',
-  };
   educations: education[];
   formEdit: FormGroup;
   formCreate: FormGroup;
@@ -38,21 +30,21 @@ export class EducationComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       institution: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       title: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       dateStart: ['', [Validators.required]],
@@ -64,28 +56,27 @@ export class EducationComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       institution: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       title: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       dateStart: ['', [Validators.required]],
       dateEnd: ['', []],
       now: [false, []],
     });
-    this.getEducations();
   }
 
   public getEducations(): void {
@@ -97,7 +88,9 @@ export class EducationComponent implements OnInit {
   public get isOnLine(): boolean {
     return this.Auth.logIn;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getEducations();
+  }
 
   emit(message: any) {
     this.emitter.emit(message);
@@ -160,6 +153,8 @@ export class EducationComponent implements OnInit {
   }
 
   public handleEdit($event: any) {
+    let resourceToEdit = {} as education;
+
     this.emit({ msg: '', type: 'loader' });
 
     if (this.formEdit.invalid) {
@@ -168,27 +163,25 @@ export class EducationComponent implements OnInit {
     }
 
     let form = $event.target.parentElement.parentElement;
-    this.resourceToEdit.id = form.id;
-    this.resourceToEdit.name = form.name.value;
-    this.resourceToEdit.institution = form.institution.value;
-    this.resourceToEdit.dateStart = form.dateStart.value;
-    this.resourceToEdit.dateEnd = form.now.checked
-      ? 'Presente'
-      : form.dateEnd.value;
-    this.resourceToEdit.title = form.title.value;
+    resourceToEdit.id = form.id;
+    resourceToEdit.name = form.name.value;
+    resourceToEdit.institution = form.institution.value;
+    resourceToEdit.dateStart = form.dateStart.value;
+    resourceToEdit.dateEnd = form.now.checked ? 'Presente' : form.dateEnd.value;
+    resourceToEdit.title = form.title.value;
 
     this.ajax
-      .editResource('educations', this.resourceToEdit.id, this.resourceToEdit)
+      .editResource('educations', resourceToEdit.id, resourceToEdit)
       .subscribe({
         next: () => {
           this.emit({ msg: 'Recurso editado con exito', type: 'success-save' });
           this.educations.forEach((education) => {
-            if (education.id == this.resourceToEdit.id) {
-              education.name = this.resourceToEdit.name;
-              education.institution = this.resourceToEdit.institution;
-              education.dateStart = this.resourceToEdit.dateStart;
-              education.dateEnd = this.resourceToEdit.dateEnd;
-              education.title = this.resourceToEdit.title;
+            if (education.id == resourceToEdit.id) {
+              education.name = resourceToEdit.name;
+              education.institution = resourceToEdit.institution;
+              education.dateStart = resourceToEdit.dateStart;
+              education.dateEnd = resourceToEdit.dateEnd;
+              education.title = resourceToEdit.title;
             }
           });
         },
@@ -204,6 +197,15 @@ export class EducationComponent implements OnInit {
   }
 
   public handleCreate($event: any) {
+    let resourceToCreate = {
+      id: null,
+      name: '',
+      institution: '',
+      title: '',
+      dateStart: '',
+      dateEnd: '',
+    };
+
     this.emit({ msg: '', type: 'loader' });
 
     if (this.formCreate.invalid) {
@@ -212,22 +214,23 @@ export class EducationComponent implements OnInit {
     }
 
     $event.preventDefault();
+
     let form = $event.target.parentElement.parentElement;
 
-    this.resourceToCreate.name = form.name.value;
-    this.resourceToCreate.institution = form.institution.value;
-    this.resourceToCreate.title = form.title.value;
-    this.resourceToCreate.dateStart = form.dateStart.value;
-    this.resourceToCreate.dateEnd = form.now.checked
+    resourceToCreate.name = form.name.value;
+    resourceToCreate.institution = form.institution.value;
+    resourceToCreate.title = form.title.value;
+    resourceToCreate.dateStart = form.dateStart.value;
+    resourceToCreate.dateEnd = form.now.checked
       ? 'Presente'
       : form.dateEnd.value;
 
     form.reset();
 
-    this.ajax.createResource('educations', this.resourceToCreate).subscribe({
+    this.ajax.createResource('educations', resourceToCreate).subscribe({
       next: (data) => {
-        this.resourceToCreate.id = data;
-        this.educations.unshift(this.resourceToCreate);
+        resourceToCreate.id = data;
+        this.educations.unshift(resourceToCreate);
 
         this.emit({ msg: 'Recurso creado con exito', type: 'success-save' });
       },

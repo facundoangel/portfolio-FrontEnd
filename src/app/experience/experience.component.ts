@@ -15,14 +15,7 @@ export class ExperienceComponent implements OnInit {
   switchFormDelete: Boolean;
   resourceToDelete: [String, number | null];
   resourceToEdit: Experience;
-  resourceToCreate: any = {
-    id: null,
-    position: '',
-    company: '',
-    dateStart: '',
-    dateEnd: '',
-    tasks: '',
-  };
+
   experiences: Experience[];
   formEdit: FormGroup;
   formCreate: FormGroup;
@@ -38,21 +31,21 @@ export class ExperienceComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       puesto: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       tareas: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,200}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,200}$/),
         ],
       ],
       fechaInicio: ['', [Validators.required]],
@@ -64,21 +57,21 @@ export class ExperienceComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       puesto: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,40}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,40}$/),
         ],
       ],
       tareas: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[a-zA-Záéíóú\.()\-, ]{0,200}$/),
+          Validators.pattern(/^[a-zA-Záéíóú\.()\-,ñÑ ]{0,200}$/),
         ],
       ],
       fechaInicio: ['', [Validators.required]],
@@ -163,6 +156,8 @@ export class ExperienceComponent implements OnInit {
   }
 
   public handleEdit($event: any) {
+    let resourceToEdit = {} as Experience;
+
     this.emit({ msg: '', type: 'loader' });
 
     if (this.formEdit.invalid) {
@@ -171,28 +166,28 @@ export class ExperienceComponent implements OnInit {
     }
 
     let form = $event.target.parentElement.parentElement;
-    this.resourceToEdit.id = form.id;
-    this.resourceToEdit.position = form.position.value;
-    this.resourceToEdit.company = form.company.value;
-    this.resourceToEdit.dateStart = form.dateStart.value;
-    this.resourceToEdit.dateEnd = form.presente.checked
+    resourceToEdit.id = form.id;
+    resourceToEdit.position = form.position.value;
+    resourceToEdit.company = form.company.value;
+    resourceToEdit.dateStart = form.dateStart.value;
+    resourceToEdit.dateEnd = form.presente.checked
       ? 'Presente'
       : form.dateEnd.value;
 
-    this.resourceToEdit.tasks = form.tasks.value;
+    resourceToEdit.tasks = form.tasks.value;
 
     this.ajax
-      .editResource('experiences', this.resourceToEdit.id, this.resourceToEdit)
+      .editResource('experiences', resourceToEdit.id, resourceToEdit)
       .subscribe({
         next: () => {
           this.emit({ msg: 'Recurso editado con exito', type: 'success-save' });
           this.experiences.forEach((experience) => {
-            if (experience.id == this.resourceToEdit.id) {
-              experience.position = this.resourceToEdit.position;
-              experience.company = this.resourceToEdit.company;
-              experience.dateStart = this.resourceToEdit.dateStart;
-              experience.dateEnd = this.resourceToEdit.dateEnd;
-              experience.tasks = this.resourceToEdit.tasks;
+            if (experience.id == resourceToEdit.id) {
+              experience.position = resourceToEdit.position;
+              experience.company = resourceToEdit.company;
+              experience.dateStart = resourceToEdit.dateStart;
+              experience.dateEnd = resourceToEdit.dateEnd;
+              experience.tasks = resourceToEdit.tasks;
             }
           });
         },
@@ -206,6 +201,15 @@ export class ExperienceComponent implements OnInit {
   }
 
   public handleCreate($event: any) {
+    let resourceToCreate = {
+      id: null,
+      position: '',
+      company: '',
+      dateStart: '',
+      dateEnd: '',
+      tasks: '',
+    };
+
     this.emit({ msg: '', type: 'loader' });
 
     if (this.formCreate.invalid) {
@@ -216,21 +220,20 @@ export class ExperienceComponent implements OnInit {
     $event.preventDefault();
     let form = $event.target.parentElement.parentElement;
 
-    this.resourceToCreate.position = form.position.value;
-    this.resourceToCreate.company = form.company.value;
-    this.resourceToCreate.dateStart = form.dateStart.value;
-    this.resourceToCreate.dateEnd = form.now.checked
+    resourceToCreate.position = form.position.value;
+    resourceToCreate.company = form.company.value;
+    resourceToCreate.dateStart = form.dateStart.value;
+    resourceToCreate.dateEnd = form.now.checked
       ? 'Presente'
       : form.dateEnd.value;
-    this.resourceToCreate.tasks = form.tasks.value;
+    resourceToCreate.tasks = form.tasks.value;
 
     form.reset();
 
-    this.ajax.createResource('experiences', this.resourceToCreate).subscribe({
+    this.ajax.createResource('experiences', resourceToCreate).subscribe({
       next: (data) => {
-        console.log(data);
-        this.resourceToCreate.id = data;
-        this.experiences.unshift(this.resourceToCreate);
+        resourceToCreate.id = data;
+        this.experiences.unshift(resourceToCreate);
         this.closeModal();
         this.emit({ msg: 'Recurso creado con exito', type: 'success-save' });
       },

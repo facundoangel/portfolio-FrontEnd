@@ -24,7 +24,7 @@
 
 .descripcion-trabajo::before {
   content: "";
-  left: -13px;
+  left: 0.2rem;
   top: 50%;
   transform: translateY(-50%);
   position: absolute;
@@ -39,8 +39,21 @@
 
 .item-experience {
   position: relative;
-  margin-left: 100px;
+  margin-left: 80px;
 }
+.card {
+  background: none;
+  border: none;
+}
+
+.card-header {
+  border-radius: 20px 20px 0 0;
+  background-color: #fbab7e;
+  background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
+  color: #e2e2e2;
+  text-shadow: 1px 1px 4px black;
+}
+
 .item-experience::before {
   content: "";
   width: 30px;
@@ -68,7 +81,7 @@
   opacity: 0.6;
   position: absolute;
   right: 0;
-  top: 7px;
+  top: 13px;
   transform: translateX(-50%);
   width: 35px;
   height: 35px;
@@ -90,7 +103,7 @@
   opacity: 0.6;
   position: absolute;
   right: 46px;
-  top: 7px;
+  top: 13px;
   transform: translateX(-50%);
   width: 35px;
   height: 35px;
@@ -170,4 +183,26 @@ input:not(input[class*="form-check"]) {
   transform: translateY(80%);
   color: #f00;
   font-size: 12px;
+}
+
+@media (max-width: 780px) {
+  .item-experience {
+    margin-left: 0px;
+  }
+  .item-experience::before {
+    width: 0px;
+    height: 0px;
+  }
+  .item-experience:not(.item-experience:first-child)::after {
+    width: 0px;
+    height: 0px;
+  }
+  .descripcion-trabajo::before {
+    width: 0px;
+    height: 0px;
+  }
+
+  .card-header {
+    padding-right: 110px !important;
+  }
 }
