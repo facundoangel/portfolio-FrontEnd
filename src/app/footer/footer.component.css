@@ -16,3 +16,9 @@ footer {
 #email:hover #email-direction {
   max-width: 18em;
 }
+
+@media (max-width: 720px) {
+  #email:hover #email-direction {
+    max-width: 0 !important;
+  }
+}

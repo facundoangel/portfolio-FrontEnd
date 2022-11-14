@@ -149,6 +149,6 @@ input:not(input[class*="form-check"]) {
   }
 
   .item-skill {
-    width: 100%;
+    width: 120%;
   }
 }

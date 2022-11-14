@@ -121,4 +121,8 @@ video {
   .bienvenida {
     margin-top: -18vh;
   }
+
+  #email:hover #email-direction {
+    max-width: 0 !important;
+  }
 }

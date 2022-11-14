@@ -56,13 +56,8 @@
 
 .card-header {
   border-radius: 20px 20px 0 0;
-  background-color: #931198;
-  background-image: linear-gradient(
-    45deg,
-    #931198 0%,
-    #2bd2ff 52%,
-    #2bff88 90%
-  );
+  background-color: #ffe53b;
+  background-image: linear-gradient(147deg, #ffe53b 0%, #ff2525 74%);
 
   color: #e2e2e2;
   text-shadow: 1px 1px 4px black;
@@ -272,9 +267,5 @@ input:not(input[class*="form-check"]) {
   .descripcion-trabajo::before {
     width: 0px;
     height: 0px;
-  }
-
-  .card-header {
-    padding-right: 110px !important;
   }
 }

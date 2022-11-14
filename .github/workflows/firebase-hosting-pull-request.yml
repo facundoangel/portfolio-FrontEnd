@@ -13,5 +13,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORFTOLIO_ANGULAR }}'
-          projectId: porftolio-angular
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FACUNDO_ANGEL }}'
+          projectId: facundo-angel

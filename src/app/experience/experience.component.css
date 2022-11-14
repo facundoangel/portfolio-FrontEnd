@@ -201,8 +201,4 @@ input:not(input[class*="form-check"]) {
     width: 0px;
     height: 0px;
   }
-
-  .card-header {
-    padding-right: 110px !important;
-  }
 }
